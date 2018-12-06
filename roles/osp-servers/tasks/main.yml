@@ -37,6 +37,13 @@
   tags:
   - test.servers
 
+- name: OpenStack servers
+  os_server_facts:
+    cloud: ospcloud
+  register: result
+  tags:
+    - test.servers
+
 - name: Wait for server to be available
   wait_for:
     host: "{{ item.public_v4 }}"
