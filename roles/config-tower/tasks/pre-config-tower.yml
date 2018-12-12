@@ -1,3 +1,38 @@
+- name: Install required packages 
+  yum: 
+     name: "{{item}}"
+     state: latest 
+  loop: 
+    - python 
+    - python-pip 
+    - python-devel 
+    - gcc
+- name: Install tower-cli
+  pip:
+    name: ansible-tower-cli
+    state: latest
+
+- name: Configure the tower cli file
+  template:
+    src: tower_cli.j2
+    dest: "~/.tower_cli.cfg"
+    mode: 0600
+
+- name: Append file
+  lineinfile:
+    path: /root/license.txt
+    insertbefore: '"gssltd.*"'
+    line: '"eula_accepted" : "true",'
+
+- name: Add the tower license 
+  command: |
+    tower-cli setting modify LICENSE @/root/license.txt
+
+- name: Remove License file
+  file:
+   path: /root/license.txt
+   state: absent
+
 - name: Generate var file for order_svc.sh script
   template:
     src: aws_jq_vars.yml
@@ -13,6 +48,10 @@
     src: "{{path_to_opentlc_key}}"
     dest: /root/secret.pem
 
+- name: Copy AWS read only creds
+  copy:
+    src: read_only.json 
+    dest: /root/read_only.json
 
 - name: Copy inventory vars
   copy:

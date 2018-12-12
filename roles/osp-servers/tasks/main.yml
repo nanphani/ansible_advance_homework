@@ -19,7 +19,7 @@
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
   with_subelements:
-    - "{{ osp_servers }}"
+    - "{{osp_servers}}"
     - meta
   tags:
   - test.servers
@@ -33,9 +33,9 @@
     network: ext_network
     wait: true
     timeout: 200
-  with_dict: "{{ osp_servers }}"
+  with_dict: "{{osp_servers}}"
   tags:
-  - test.servers
+  - test.servers   
 
 - name: OpenStack servers
   os_server_facts:

@@ -1,2 +1,5 @@
----
-# vars file for db-tier
+postgresql_databases:
+  - name: pgsql_db
+postgresql_users:
+  - name: pgsql_user
+    password: supersecure

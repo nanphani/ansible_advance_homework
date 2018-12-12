@@ -1,7 +1,7 @@
 - hosts: frontends
   gather_facts: false
   tasks:
-  - name: Use Uri module for wrting smoke test.
+  - name: Curl website
     uri:
      url: "http://{{ item }}"
      return_content: yes
@@ -16,4 +16,3 @@
     when: "'Ansible has done its job' not in webpage.results[0].content"
     tags:
       - osp.smoke
-
